@@ -1,14 +1,17 @@
 let express=require("express");
 let cors=require("cors");
+require("dotenv").config();
+
 let app=express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Spotify Backend Running 🚀");
+    res.send("Spotify Backend Running ");
 });
 
 const allowedOrigins = [
     'http://localhost:5173', 
+    'http://localhost:5174',
     'http://localhost:8000',
     'https://spotify-frontend-o19e.onrender.com'
 ];
@@ -41,9 +44,10 @@ const { CreatePlaylist } = require("./API/CreatePlaylist");
 const { GetPlaylist } = require("./API/GetPlaylist");
 const { AddSongToPlaylist } = require("./API/AddSongToPlaylist");
 const { GetPlaylistById } = require("./API/GetPlaylistById");
+const { GetPremiumStatus } = require("./API/GetPremiumStatus");
 
 let port=process.env.PORT || 8000;
-require("dotenv").config();
+
 
 connectDB();
 
@@ -68,6 +72,7 @@ app.post("/playlist", AuthMiddleWare, CreatePlaylist);
 app.get("/playlist", AuthMiddleWare, GetPlaylist);
 app.post("/playlist/addsong", AuthMiddleWare, AddSongToPlaylist);
 app.get("/playlist/:id", AuthMiddleWare, GetPlaylistById);
+app.get("/premiumstatus", AuthMiddleWare, GetPremiumStatus);
 
 app.listen(port,()=>{
     console.log("Server is running on port " + port);
