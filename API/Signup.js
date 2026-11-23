@@ -5,7 +5,7 @@ let Signup = async (req, res) => {
   try {
     let db = await connectDB();
     let collection = db.collection("users");
-    let { email, password } = req.body;
+    let { email, password, username } = req.body;
 
     if (!email) {
       return res.status(400).send({ message: "Email is required" });
@@ -22,7 +22,7 @@ let Signup = async (req, res) => {
     let user = {
       email,
       password: hashedPassword,
-      username: "",
+      username: username?.trim() || email.split("@")[0],
       profileImage: "",
       createdAt: new Date(),
     };

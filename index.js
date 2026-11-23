@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 const allowedOrigins = [
     'http://localhost:5173', 
     'http://localhost:5174',
-    'http://localhost:8000',
+    'http://localhost:8001',
     'https://spotify-frontend-o19e.onrender.com'
 ];
 app.use(cors({
@@ -45,8 +45,9 @@ const { GetPlaylist } = require("./API/GetPlaylist");
 const { AddSongToPlaylist } = require("./API/AddSongToPlaylist");
 const { GetPlaylistById } = require("./API/GetPlaylistById");
 const { GetPremiumStatus } = require("./API/GetPremiumStatus");
+const { SelectBasicPlan } = require("./API/SelectBasicPlan");
 
-let port=process.env.PORT || 8000;
+let port=process.env.PORT || 8001;
 
 
 connectDB();
@@ -73,6 +74,7 @@ app.get("/playlist", AuthMiddleWare, GetPlaylist);
 app.post("/playlist/addsong", AuthMiddleWare, AddSongToPlaylist);
 app.get("/playlist/:id", AuthMiddleWare, GetPlaylistById);
 app.get("/premiumstatus", AuthMiddleWare, GetPremiumStatus);
+app.put("/basicplan", AuthMiddleWare, SelectBasicPlan);
 
 app.listen(port,()=>{
     console.log("Server is running on port " + port);
